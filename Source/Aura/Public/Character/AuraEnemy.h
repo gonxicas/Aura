@@ -1,6 +1,4 @@
-﻿// 
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "AuraCharacterBase.h"
@@ -16,8 +14,4 @@ public:
 	AAuraEnemy();
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
-	virtual void Tick(float DeltaSeconds) override;
-	
-private:
-	bool bIsHighlighted = false;
 };
