@@ -2,6 +2,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Interaction/EnemyInterface.h"
 
 class UEnhancedInputLocalPlayerSubsystem;
 
@@ -38,6 +39,40 @@ void AAuraPlayerController::SetupInputComponent()
 	
 	
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
+}
+
+void AAuraPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	CursorTrace();	
+}
+
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
+	
+	LastActor = ThisActor;
+	ThisActor = CursorHit.GetActor();
+	
+	if (LastActor == nullptr && ThisActor != nullptr)
+	{
+		ThisActor->HighlightActor();
+	}
+	if (LastActor != nullptr)
+	{
+		if (ThisActor == nullptr)
+		{
+			LastActor->UnHighlightActor();
+		}
+		else if (LastActor != ThisActor)
+		{
+			LastActor->UnHighlightActor();
+			ThisActor->HighlightActor();
+		}	
+	}
 }
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
