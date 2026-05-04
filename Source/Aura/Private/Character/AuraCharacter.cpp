@@ -1,24 +1,17 @@
 ﻿#include "Character/AuraCharacter.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 AAuraCharacter::AAuraCharacter()
 {
-	PrimaryActorTick.bCanEverTick = true;
-}
-
-void AAuraCharacter::BeginPlay()
-{
-	Super::BeginPlay();
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
+	GetCharacterMovement()->bConstrainToPlane = true;
+	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 	
-}
-
-void AAuraCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
-void AAuraCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
 }
 
